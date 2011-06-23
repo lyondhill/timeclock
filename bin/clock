@@ -6,7 +6,7 @@ def help
   puts ""
   puts "clock in"
   puts "clock out"
-  puts "clock send"
+  puts "clock submit"
   puts "clock clear"
 end
 
@@ -14,20 +14,20 @@ if ARGV.first == nil
   puts "Error: incorrect syntax"
   puts "try clock --help"
 else
-  TimeClock::Clock.check_file
+  Timeclock::Clock.check_file
   case ARGV.first
   when "in"
-    TimeClock::Clock.clock_in
+    Timeclock::Clock.clock_in
   when "out"
-    TimeClock::Clock.clock_out
+    Timeclock::Clock.clock_out
   when "submit"
-    TimeClock::Clock.send
+    Timeclock::Clock.send
   when "send"
-    TimeClock::Clock.send
+    Timeclock::Clock.send
   when "clear"
-    TimeClock::Clock.clear
-  when "--help"
-    help
+    Timeclock::Clock.clear
+  when "total"
+    puts Timeclock::Clock.total
   else
     help
   end
