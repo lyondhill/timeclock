@@ -65,11 +65,11 @@ module Timeclock
         day = Time.parse(element[:clock_in]).day
         if new_hash[day]
           new_hash[day][:total] += element[:hours]
-          new_hash[day][:log] << {:in => element[:clock_in], :out => element[:clock_in]}
+          new_hash[day][:log] << {:in => element[:clock_in], :out => element[:clock_out]}
         else
           new_hash[day] = {}
           new_hash[day][:total] = element[:hours]
-          new_hash[day][:log] = [{:in => element[:clock_in], :out => element[:clock_in]}]
+          new_hash[day][:log] = [{:in => element[:clock_in], :out => element[:clock_out]}]
         end
       end
       new_hash[:total] = total
