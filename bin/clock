@@ -15,6 +15,7 @@ if ARGV.first == nil
   puts "try clock --help"
 else
   Timeclock::Clock.check_file
+  Timeclock::Clock.check_email
   case ARGV.first
   when "in"
     Timeclock::Clock.clock_in
@@ -28,6 +29,9 @@ else
     Timeclock::Clock.clear
   when "total"
     puts Timeclock::Clock.total
+  when "daily"
+    require 'pp'
+    pp Timeclock::Clock.daily_log
   else
     help
   end

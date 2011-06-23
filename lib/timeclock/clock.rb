@@ -11,9 +11,23 @@ module Timeclock
       File.open(log_file, "w").write(contents)
     end
 
+
     def get_log_string
       File.open(log_file, 'r') { |f| f.read }
     end
+
+    def put_email_string(contents)
+      File.open(email_file, "w").write(contents)      
+    end
+
+    def get_email_string
+      File.open(email_file, 'r') { |f| f.read }
+    end
+
+    def email_file
+      "#{home_directory}/.email"
+    end
+
 
     def log_file
       "#{home_directory}/.timeclock"
@@ -116,7 +130,16 @@ module Timeclock
           :subject => "Time card", 
           :content_type => 'text/html',
           :html_body => ERB.new(File.new("templates/email.html.erb").read).result(binding),
-          :body => "Make it read html so you can see the awesomeness that is my timecard"
+          :body => "You are reading this because your email client sux and cant interperate html... fix it." #,
+          # :via => :smtp, :via_options => {
+          #   :address              => 'smtp.gmail.com',
+          #   :port                 => '587',
+          #   :enable_starttls_auto => true,
+          #   :user_name            => 'user',
+          #   :password             => 'password',
+          #   :authentication       => :plain, # :plain, :login, :cram_md5, no auth by default
+          #   :domain               => "localhost.localdomain" # the HELO domain provided by the client to the server
+          #   }
           )
         puts "Time card has been sent to #{to}."
       rescue Exception => e
@@ -125,13 +148,25 @@ module Timeclock
 
     end
 
+    def email
+      string = get_email_string
+      array = string.split("\n")
+    end
+
+    def check_email
+      `touch #{email_file}` unless File.exist? email_file
+    end
+
     def check_file
       `touch #{log_file}` unless File.exist? log_file
     end
 
     def clear
-      `rm #{log_file}`
-      check_file
+      print "Are you sure you want delete your existing log? (yes/no): "
+      if STDIN.gets.strip == 'yes'
+        `rm #{log_file}`
+        check_file
+      end
     end
 
 
