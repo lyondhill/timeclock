@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = Timeclock::VERSION
   s.authors     = ["Lyon"]
   s.email       = ["lyon@delorum.com"]
-  s.homepage    = ""
+  s.homepage    = "http://github.com/lyondhill/timeclock"
   s.summary     = %q{Timeclock is a small but useful timeclock system that allows users to push clock in and clock out. additionally you can see your daily time totals and you can also send your clock invoice to an email}
   s.description = %q{A simple console based clock in/clock out system.}
 
