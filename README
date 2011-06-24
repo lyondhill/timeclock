@@ -1,0 +1,6 @@
+TODO: 
+
+ - Style the email
+ - Allow smtp information to be set.. probably save to a deet's to a file like we are doing with ~/.timeclock
+ - Move the .timeclock file and email file to a folder ~/.timeclock/
+ - layer in an automation system.
