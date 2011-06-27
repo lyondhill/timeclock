@@ -148,6 +148,11 @@ module Timeclock
 
     end
 
+    def clay
+      require 'erb'
+      ERB.new(File.new("templates/email.html.erb").read).result(binding)
+    end
+
     def email
       string = get_email_string
       array = string.split("\n")

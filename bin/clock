@@ -32,6 +32,8 @@ else
   when "daily"
     require 'pp'
     pp Timeclock::Clock.daily_log
+  when "clay"
+    puts Timeclock::Clock.clay
   else
     help
   end
