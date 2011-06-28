@@ -177,7 +177,7 @@ module Timeclock
     end
 
     def unsetup_automate
-      puts `whenever -w config/unschedule.rb`
+      puts `whenever -c config/schedule.rb`
     end
 
     def automate
