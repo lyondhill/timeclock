@@ -32,6 +32,12 @@ else
   when "daily"
     require 'pp'
     pp Timeclock::Clock.daily_log
+  when "automate"
+    Timeclock::Clock.automate
+  when 'begin'
+    Timeclock::Clock.setup_automate
+  when 'end'
+    Timeclock::Clock.unsetup_automate
   when "clay"
     puts Timeclock::Clock.clay
   else

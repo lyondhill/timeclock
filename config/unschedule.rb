@@ -5,11 +5,11 @@
 
 # Example:
 #
-set :output, "~/.timeclock.log"
+# set :output, "~/.timeclock.log"
 
-every 1.minute do
-  command "clock automate"
-end
+# every 1.minute do
+#   command "clock automate"
+# end
 
 # every 4.days do
 #   runner "AnotherModel.prune_old_records"

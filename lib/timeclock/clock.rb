@@ -53,11 +53,35 @@ module Timeclock
       puts "clocking in at #{Time.now}"
     end
 
+    def automate_clock_in
+      string = get_log_string
+      array = string.split("\n")
+      if !array.empty?
+        if array.last.include? "in"
+          exit(1)
+        end
+      end
+      array << "in del11009 #{Time.now}"
+      put_log_string array.join("\n")
+      puts "clocking in at #{Time.now}"
+    end
+
     def clock_out
       string = get_log_string
       array = string.split("\n")
       if array.last.include? "out"
         puts "You are already clocked out"
+        exit(1)
+      end
+      array << "out #{Time.now}"
+      put_log_string array.join("\n")
+      puts "clocking out at #{Time.now.to_s}"
+    end
+
+    def automate_clock_out
+      string = get_log_string
+      array = string.split("\n")
+      if array.last.include? "out"
         exit(1)
       end
       array << "out #{Time.now}"
@@ -146,6 +170,24 @@ module Timeclock
         puts "Time card not sent because pony is dumb."
       end
 
+    end
+
+    def setup_automate
+      puts `whenever -w config/schedule.rb`
+    end
+
+    def unsetup_automate
+      puts `whenever -w config/unschedule.rb`
+    end
+
+    def automate
+      if `ps aux | grep Adium | grep -v grep`.split("\n").size > 0
+        puts "AUTOMATE CLOCK IN"
+        automate_clock_in
+      else
+        puts "AUTOMATE CLOCK OUT"
+        automate_clock_out
+      end
     end
 
     def clay
