@@ -31,7 +31,9 @@ else
     puts Timeclock::Clock.total
   when "daily"
     require 'pp'
-    pp Timeclock::Clock.daily_log
+    string = pp Timeclock::Clock.daily_log, string
+    puts "hello #{string.join("\n")}"
+
   when "automate"
     Timeclock::Clock.automate
   when 'begin'
