@@ -1,4 +1,14 @@
-Hay dude. this will be my email someday
-<%= collect.to_s %>
-<%= total %>
-<%= daily_log %>
+<pre>
+Hay. This is the best formatting I can do.. I'm just a meager programmer..
+<% dl = daily_log %>
+<% total = dl.delete(:total)%>
+<% dl.each do |key, value| %>
+on <%= key.to_s %> I got <%= value[:total] %> hours
+	<% value[:log].each do |ele| %>
+		<%= ele.to_s %>
+	<%end%>
+<%end%>
+For a total of <%= total %> hours
+
+Thank you!
+</pre>

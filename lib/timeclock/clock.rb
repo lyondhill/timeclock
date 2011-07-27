@@ -144,7 +144,7 @@ module Timeclock
       puts collect
       print "who should I send this to: "
       to = STDIN.gets.strip
-      begin
+      # begin
         require 'pony'
         require 'erb'
 
@@ -153,6 +153,7 @@ module Timeclock
           :from => "Lyon <lyon@delorum.com>", 
           :subject => "Time card", 
           :content_type => 'text/html',
+          :domain               => "localhost.localdomain",
           :html_body => ERB.new(File.new("templates/email.html.erb").read).result(binding),
           :body => "You are reading this because your email client sux and cant interperate html... fix it." #,
           # :via => :smtp, :via_options => {
@@ -166,9 +167,9 @@ module Timeclock
           #   }
           )
         puts "Time card has been sent to #{to}."
-      rescue Exception => e
-        puts "Time card not sent because pony is dumb."
-      end
+      # rescue Exception => e
+      #   puts "Time card not sent because pony is dumb."
+      # end
 
     end
 
