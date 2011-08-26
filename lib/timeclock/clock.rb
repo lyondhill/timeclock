@@ -17,6 +17,7 @@ module Timeclock
 
     Thank you!
     </pre>"
+    
     class << self
     def home_directory
       running_on_windows? ? ENV['USERPROFILE'] : ENV['HOME']
@@ -172,7 +173,7 @@ module Timeclock
           :subject      => "Time card", 
           :content_type => 'text/html',
           :domain       => "localhost.localdomain",
-          :html_body    => ERB.new(File.new("templates/email.html.erb").read).result(binding),
+          :html_body    => ERB.new(@template).result(binding),
           :body         => "You are reading this because your email client sux and cant interperate html... fix it."
           )
         puts "Time card has been sent to #{to}."
