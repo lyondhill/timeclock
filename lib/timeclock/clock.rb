@@ -2,6 +2,21 @@ require 'time'
 
 module Timeclock
   class Clock
+    
+    @template = "<pre>
+    Hay. This is the best formatting I can do.. I'm just a meager programmer..
+    <% dl = daily_log %>
+    <% total = dl.delete(:total)%>
+    <% dl.each do |key, value| %>
+    on <%= key.to_s %> I got <%= value[:total] %> hours
+    	<% value[:log].each do |ele| %>
+    		<%= ele.to_s %>
+    	<%end%>
+    <%end%>
+    For a total of <%= total %> hours
+
+    Thank you!
+    </pre>"
     class << self
     def home_directory
       running_on_windows? ? ENV['USERPROFILE'] : ENV['HOME']
@@ -144,27 +159,21 @@ module Timeclock
       puts collect
       print "who should I send this to: "
       to = STDIN.gets.strip
+      print "what email should I send it from: "
+      from = STDIN.gets.strip
+      
       # begin
         require 'pony'
         require 'erb'
 
         Pony.mail(
-          :to => to, 
-          :from => "Lyon <lyon@delorum.com>", 
-          :subject => "Time card", 
+          :to           => to, 
+          :from         => from, 
+          :subject      => "Time card", 
           :content_type => 'text/html',
-          :domain               => "localhost.localdomain",
-          :html_body => ERB.new(File.new("templates/email.html.erb").read).result(binding),
-          :body => "You are reading this because your email client sux and cant interperate html... fix it." #,
-          # :via => :smtp, :via_options => {
-          #   :address              => 'smtp.gmail.com',
-          #   :port                 => '587',
-          #   :enable_starttls_auto => true,
-          #   :user_name            => 'user',
-          #   :password             => 'password',
-          #   :authentication       => :plain, # :plain, :login, :cram_md5, no auth by default
-          #   :domain               => "localhost.localdomain" # the HELO domain provided by the client to the server
-          #   }
+          :domain       => "localhost.localdomain",
+          :html_body    => ERB.new(File.new("templates/email.html.erb").read).result(binding),
+          :body         => "You are reading this because your email client sux and cant interperate html... fix it."
           )
         puts "Time card has been sent to #{to}."
       # rescue Exception => e
@@ -193,7 +202,7 @@ module Timeclock
 
     def clay
       require 'erb'
-      ERB.new(File.new("templates/email.html.erb").read).result(binding)
+      ERB.new(@template).result(binding)
     end
 
     def email
